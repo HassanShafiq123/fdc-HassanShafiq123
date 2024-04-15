@@ -1,7 +1,7 @@
 from typing import Dict, List
 
 import pandas as pd
-from database import Category, Menu, Restraunt, engine
+from src.database import Category, Menu, Restraunt, engine
 from sqlalchemy import insert
 from sqlalchemy.orm import Session
 
@@ -24,8 +24,11 @@ class ETL:
         Returns:
             dict: extracted data dictionary
         """
-        dataframe = pd.read_excel(path)
-        return dataframe
+        try:
+            dataframe = pd.read_excel(path)
+            return dataframe
+        except Exception as e:
+            return False
 
     def _tranform(
         self, dataframe: pd.DataFrame
@@ -157,10 +160,13 @@ class ETL:
             update_menu_items(session)
             bulk_insertion(Menu, session, cleaned_data.get("menu"))
 
-    def run_pipeline(self) -> None:
-        data = self._extract("data/restaurant_data.xlsx")
-        cleaned_data = self._tranform(data)
-        self._load(cleaned_data)
+    def run_pipeline(self) -> bool | None:
+        try:
+            data = self._extract("data/restaurant_data.xlsx")
+            cleaned_data = self._tranform(data)
+            self._load(cleaned_data)
+        except Exception as e:
+            return False
 
 
 if __name__ == "__main__":
