@@ -44,3 +44,41 @@ or:
 ```bash
 make pre-commit
 ```
+
+## How to run the project
+make file has all the command that you need to run the project smoothly.
+
+- Connect the you local database to the project, for this you have make change at two places
+1 -> `src/fig_data_challenge/database/connections.py`
+2 -> `alembic.ini` -> `sqlalchemy.url`
+
+- install the dependencies by running
+```bash
+make setup
+```
+
+### To handle migrations, we are using ALEMBIC
+
+- if you need to make changes in database, run
+```bash
+make makemigration
+```
+
+- then update the newly created file as per the changes you want
+
+to apply those changes
+```bash
+make migrate
+```
+
+- and finally to run the project
+
+```bash
+make run-main
+```
+
+- to run unit tests
+
+```bash
+make test
+```
