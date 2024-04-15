@@ -1,0 +1,13 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Unit Tests
+.pytest_cache/
+
+# JetBrains
+.idea/
+
+# Python stuff
+.DS_Store
+.github
+.vscode
